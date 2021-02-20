@@ -1,0 +1,3 @@
+Control and coordinator activity flơw of the application.
+Take the request from client, coordinator model 
+and view to render out suitable output and  then res for user
