@@ -9,11 +9,16 @@ require APPROOT . '/views/includes/navigation.php';
 <!-- <script src="https://cdn.tiny.cloud/1/onx8cc52njnijcl48hrkc5x8d1o5qj6si95kitf7px6tc4y3/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script> -->
 <!-- !tinymce -->
 
-<div class="container center">
+<style>
+    .contain {
+        margin: 100px;
+    }
+</style>
+<div class="contain center">
     <h1>
         Create new post
     </h1>
-    <form style="text-align: center;" method="POST" enctype="multipart/form-data" action="<?php echo URLROOT ?>/posts/create">
+    <form class="box" style="text-align: center;" method="POST" enctype="multipart/form-data" action="<?php echo URLROOT ?>/posts/create">
         <div class="form-item">
             <input style="width: 400px;" value="<?php echo $data['title'] ?>" type="text" name="title" placeholder="Title...">
             <br>
@@ -23,6 +28,8 @@ require APPROOT . '/views/includes/navigation.php';
         </div>
         <br>
         <div class="form-item">
+            <span>Topics : </span>
+
             <select name="topic_name">
                 <?php foreach ($data['topics'] as $topic) : ?>
                     <option value="<?php echo $topic->id ?>"><?php echo $topic->name ?></option>
@@ -36,7 +43,7 @@ require APPROOT . '/views/includes/navigation.php';
         </div>
         <br>
         <div class="form-item">
-            <input style="width: 400px;" value="<?php echo $data['summary'] ?>" type="text" name="summary" placeholder="Summary...">
+            <input style="width: 400px; margin-bottom:20px" value="<?php echo $data['summary'] ?>" type="text" name="summary" placeholder="Summary...">
             <br>
             <span class="invalidFeedback">
                 <?php echo $data['summaryError']; ?>

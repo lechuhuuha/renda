@@ -1,0 +1,53 @@
+<?php if (isLoggedIn()) : ?>
+    <a class="btn green btn-create" href="<?php echo URLROOT ?>/posts/create">
+        Create
+    </a>
+<?php endif; ?>
+<!-- Check if this user is delete own post if not it will not show -->
+<?php if ((isset($_SESSION['user_id']) && $_SESSION['user_id'] == $post->user_id) || isAdmin()) : ?>
+    <div class="wrap">
+        <?php if (!isAdmin()) : ?>
+            <a class="btn orange btn-update" href="<?php echo URLROOT . "/posts/update/" . $post->id ?>">
+                Update
+            </a>
+        <?php endif; ?>
+        <!-- !Check if this user is delete own post if not it will not show -->
+        <!-- Delete button -->
+        <form action="<?php echo URLROOT . "/posts/delete/" . $post->id ?>" method="post">
+            <input type="submit" name="delete" value="delete" class="btn red btn-delete">
+        </form>
+        <!-- !Delete button -->
+    </div>
+
+<?php endif; ?>
+
+
+
+register
+<!-- <div class="container-login">
+    <div class="wrapper-login">
+        <h2>Register </h2>
+        <form action="<?php echo URLROOT; ?>/users/register" method="POST">
+            <input type="text" placeholder="UserName *" value="<?php echo $data['username'] ? '' : $data['username'] ?>" name="username" required>
+            <span class="invalidFeedback">
+                <?php echo $data['usernameError']; ?>
+            </span>
+            <input type="email" placeholder="Email *" value="<?php echo $data['email'] ? '' : $data['email'] ?>" name="email" required>
+            <span class="invalidFeedback">
+                <?php echo $data['emailError']; ?>
+            </span>
+
+            <input type="password" placeholder="PassWord *" value="<?php echo $data['password'] ? '' : $data['password'] ?>" name="password" required>
+            <span class="invalidFeedback">
+                <?php echo $data['passwordError']; ?>
+            </span>
+
+            <input type="password" placeholder="ConfirmPassword *" value="<?php echo $data['confirmPass'] ? '' : $data['confirmPass'] ?>" name="confirmPass" required>
+            <span class="invalidFeedback">
+                <?php echo $data['confirmPassError']; ?>
+            </span>
+            <button id="submit" type="submit" value="submit">Submit</button>
+
+        </form>
+    </div>
+</div> -->

@@ -1,20 +1,23 @@
 <?php
 
-class Posts extends Controller
+class Posts extends Controller 
 {
     public function __construct()
     {
         $this->postModel = $this->model('Post');
         $this->userModel = $this->model('User');
         $this->topicModel = $this->model('Topic');
+        $this->cmtModel = $this->model('Cmt');
     }
 
     public function index()
     {
         $user = $this->userModel->getUser();
+        $topics = $this->topicModel->findAllTopic();
         $data = [
             'posts' => '',
-            'users' => ''
+            'users' => '',
+            'topics' => ''
         ];
         // lấy page từ url nếu ko có thì lấy mặc định
         // bản ghi của mỗi page .Mặc định là 10
@@ -27,7 +30,7 @@ class Posts extends Controller
         } else {
             $page = 1;
         }
-        $no_of_records_per_page = 10;
+        $no_of_records_per_page = 3;
         $offset = ($page - 1) * $no_of_records_per_page;
         $total_records_sql = $this->postModel->countPages();
         $total_row = $total_records_sql->{'COUNT(*)'};
@@ -37,8 +40,8 @@ class Posts extends Controller
             'posts' => $posts,
             'users' => $user,
             'total_pages' => $total_pages,
-            'pages' => $page
-
+            'pages' => $page,
+            'topics' => $topics
         ];
 
         // $yourObject->{'duration-123'}
@@ -125,8 +128,8 @@ class Posts extends Controller
             // if all required then procress to upload if not then back to the create page
             if (empty($data['titleError']) && empty($data['summaryError']) && empty($data['bodyError']) && empty($data['topicError']) && empty($data['imageError'])) {
                 if ($this->postModel->addPost($data)) {
-                  $postByTitle =  $this->postModel->findPostByTitle($data);
-                  $data['post_id'] = $postByTitle;
+                    $postByTitle =  $this->postModel->findPostByTitle($data);
+                    $data['post_id'] = $postByTitle;
                     if ($this->postModel->addTopic($data)) {
                         header("Location:" . URLROOT . "/posts");
                     }
@@ -143,6 +146,13 @@ class Posts extends Controller
     public function post($id)
     {
         $post = $this->postModel->findPostById($id);
+        $topics = $this->topicModel->findAllTopic();
+        $cmts = $this->cmtModel->getCmtByPost($id);
+        $reps = $this->cmtModel->getAllRep();
+        $numComments = $this->cmtModel->totalCmts($id);
+        $no_of_records_per_page = 3;
+        $offset = 1;
+        $posts = $this->postModel->findALlPost($offset, $no_of_records_per_page);
         // if (!isLoggedIn()) {
         //     header("Location: " . URLROOT . "/posts");
         // } else if ($post->user_id != $_SESSION['user_id']) {
@@ -154,16 +164,17 @@ class Posts extends Controller
                 'post' => $post
             ];
             $user = $this->userModel->findUserById($data['post']->user_id);
-
-
             $this->postModel->incsView($data);
-
-            // $cmt = $this->postModel->showCmt($id);
             $data = [
                 'post' => $post,
                 'user' => $user,
-                // 'cmt' => $cmt,
+                'topics' => $topics,
+                'posts' => $posts,
+                'cmts' => $cmts,
+                'reps' => $reps,
+                'numComments' => $numComments,
             ];
+
             $this->view('posts/post', $data);
         }
 
@@ -172,8 +183,10 @@ class Posts extends Controller
     public function update($id)
     {
         $post = $this->postModel->findPostById($id);
+        $topics = $this->postModel->findTopicByPost($id);
+        $allTopics = $this->topicModel->findAllTopic();
 
-        if (isAdmin() || !isMyPost($post) ) {
+        if (!isAdmin() && !isMyPost($post)) {
 
             header("Location: " . URLROOT . "/posts");
         }
@@ -184,8 +197,11 @@ class Posts extends Controller
             header("Location: " . URLROOT . "/posts");
         }
 
+
         $data = [
             'post' => $post,
+            'topics' => $topics,
+            'allTopics' => $allTopics,
             'user_id' => '',
             'title' => '',
             'summary' => '',
@@ -205,6 +221,9 @@ class Posts extends Controller
                 $data = [
                     'id' => $id,
                     'post' => $post,
+                    'topics' => $topics,
+                    'allTopics' => $allTopics,
+                    'new_topic' => trim($_POST['new_topic']),
                     'user_id' => trim($_SESSION['user_id']),
                     'summary' => trim($_POST['summary']),
                     'title' => trim($_POST['title']),
@@ -219,6 +238,9 @@ class Posts extends Controller
                 $data = [
                     'id' => $id,
                     'post' => $post,
+                    'topics' => $topics,
+                    'allTopics' => $allTopics,
+                    'new_topic' => trim($_POST['new_topic']),
                     'user_id' => trim($_SESSION['user_id']),
                     'summary' => trim($_POST['summary']),
                     'title' => trim($_POST['title']),
@@ -282,6 +304,8 @@ class Posts extends Controller
             }
             if ((empty($data['titleError']) ||  empty($data['bodyError']) ||  empty($data['summaryError'])) || empty($data['imageError'])) {
                 if ($this->postModel->updatePost($data)) {
+                    $this->postModel->updateTopicByPost($data);
+
                     header("Location:" . URLROOT . "/posts");
                 } else {
                     die('Something went wrong,pls try again LOL');
@@ -327,9 +351,15 @@ class Posts extends Controller
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
             $title = $_POST['title'];
             $post = $this->postModel->searchPost($title);
+            $topics = $this->topicModel->findAllTopic();
+            $no_of_records_per_page = 3;
+            $offset = 1;
+            $posts = $this->postModel->findALlPost($offset, $no_of_records_per_page);
             if ($post) {
                 $data = [
                     'posts' => $post,
+                    'topics' => $topics,
+                    'posts' => $posts,
                 ];
             } else {
                 header('Location:' . URLROOT . '/pages/error404');

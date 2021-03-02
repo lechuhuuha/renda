@@ -60,8 +60,8 @@ class Post
     public function addTopic($data)
     {
         $this->db->query('INSERT INTO topic_post (topic_id,post_id) VALUES (:topic_id,:post_id)');
-        $this->db->bind(':topic_id',$data['topics_name']);
-        $this->db->bind(':post_id',$data['post_id']->id);
+        $this->db->bind(':topic_id', $data['topics_name']);
+        $this->db->bind(':post_id', $data['post_id']->id);
         if ($this->db->execute()) {
             return true;
         } else {
@@ -95,6 +95,17 @@ class Post
         $this->db->bind(':summary', $data['summary']);
         $this->db->bind(':image', $data['image']);
         $this->db->bind(':body', $data['body']);
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function updateTopicByPost($data)
+    {
+        $this->db->query('UPDATE topic_post SET topic_id=:topic_id WHERE post_id=:post_id ');
+        $this->db->bind(':post_id', $data['id']);
+        $this->db->bind(':topic_id', $data['new_topic']);
         if ($this->db->execute()) {
             return true;
         } else {
@@ -162,6 +173,12 @@ class Post
     {
         $this->db->query('SELECT * FROM posts WHERE user_id=:user_id');
         $this->db->bind(':user_id', $id);
+        $result = $this->db->resultSet();
+        return $result;
+    }
+    public function findTopicByPost($id)
+    {
+        $this->db->query(" SELECT * FROM `topics` JOIN topic_post ON topic_post.post_id = $id WHERE topics.id=topic_post.topic_id");
         $result = $this->db->resultSet();
         return $result;
     }

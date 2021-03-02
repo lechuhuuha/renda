@@ -48,7 +48,8 @@ function isAuthor()
  */
 function isTrueUser($data)
 {
-    if (  $_SESSION['role'] == $data['user']->role && $_SESSION['user_id'] = $data['user']->id) {
+    
+    if ( isset($_SESSION['role']) && $_SESSION['role'] == $data['user']->role && $_SESSION['user_id'] = $data['user']->id) {
         return true;
     } else {
         return false;

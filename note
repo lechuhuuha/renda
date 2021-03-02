@@ -1,0 +1,68 @@
+10-12-2020
+--header non user to index page when try to go using url
+--login user need to be logout be4 want to login again
+--ckedior doesn't work 
+--bg image in each post did not display although in url is work
+12-12-2020
+comment system not done yet 
+topic not done yet
+--search broken 
+error page need to be done
+
+tnr 14 
+dan dong 1.5 
+Căn lề trên 3.5 lề dưới 3cm
+flowchart
+
+
+--validate for the image need to be fix
+--update need to render value for the body in editor
+14-12-2020
+--check again on create
+--search page need some css
+--author name in the index post
+--author id in the link to access with it
+--author image
+--admin can only delete post by author but can not create or update post by author
+--if role=1 then can delete
+
+future plan 
+post with topic 
+comment on each post
+admin panel
+vietnamese turn in to english image name
+will try to user another method beside session to validate admin or author
+many code line still repeat will defenitely fix that
+// finish in 8/1/2021
+--login system will auto detect admin or author so don't need to choose role when login 
+// 
+
+thing need to do from 8/1/2021
+will try to make admin can update statis of other author like deleted or suspended
+--send email for password reset
+backup database into .sql .xml
+--reset password
+remember me 
+author page (detail about the author, can get the front-end in about me page )
+evrything if its possible,can make into ajax
+comment system not done yet 
+topic not done yet
+create post with existed topic
+error page need to be done
+admin panel
+--user can view author page
+user class need an interface 
+
+
+Thing need to do in 18/2/2021
+topic - 50% 
+comment 
+admin panel bc my teacher "want" IT.
+newest post, most viewed post , random post
+user panel or author panel whatever
+when user enter input field wrong then return same result they last enter to user to know
+need to identify which admin is update topic
+only 1 username per email
+pagnation for all thing
+
+

@@ -5,8 +5,12 @@ require APPROOT . '/views/includes/head.php';
 <?php
 require APPROOT . '/views/includes/navigation.php';
 ?>
-
-<div class="container center">
+<style>
+    .contain {
+        margin: 100px;
+    }
+</style>
+<div class="contain center">
     <h1>
         Update post
     </h1>
@@ -20,7 +24,29 @@ require APPROOT . '/views/includes/navigation.php';
         </div>
         <br>
         <div class="form-item">
-            <input style="width: 400px;" value="<?php echo $data['post']->summary ?>" type="text" name="summary" placeholder="Summary...">
+            <span> Your Topics : </span>
+
+            <select name="topic_name">
+                <?php foreach ($data['topics'] as $topic) : ?>
+                    <option value="<?php echo $topic->id ?>"><?php echo $topic->name ?></option>
+                <?php endforeach;  ?>
+
+            </select>
+            <br>
+
+            <span> All Topics : </span>
+
+            <select name="new_topic">
+                <?php foreach ($data['allTopics'] as $allTopic) : ?>
+                    <option value="<?php echo $allTopic->id ?>"><?php echo $allTopic->name ?></option>
+                <?php endforeach;  ?>
+
+            </select>
+            <br>
+        </div>
+        <br>
+        <div class="form-item">
+            <input style="width: 400px; margin-bottom:20px " value="<?php echo $data['post']->summary ?>" type="text" name="summary" placeholder="Summary...">
             <br>
             <span class="invalidFeedback">
                 <?php echo $data['summaryError']; ?>
@@ -40,7 +66,8 @@ require APPROOT . '/views/includes/navigation.php';
         <br>
         <div class="form-item">
             <input style="height:auto;" type="file" name="image">
-            <img style="width: 100px;" src="<?php echo URLROOT . '/public/img/' . $data['post']->image; ?>" alt="">
+            <span>Image : </span>
+            <img style="width: 500px;" src="<?php echo URLROOT . '/public/img/' . $data['post']->image; ?>" alt="">
             <br>
             <span class="invalidFeedback">
                 <?php echo $data['imageError']; ?>

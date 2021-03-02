@@ -5,122 +5,196 @@ require APPROOT . '/views/includes/head.php';
 <?php
 require APPROOT . '/views/includes/navigation.php';
 ?>
-<header class="main-header " style="background-image: url(https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/7e0cf033-9c86-40bd-9040-391f4df623be/d7vsx4m-d592f069-8c67-4f96-a631-299fce7433c2.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOiIsImlzcyI6InVybjphcHA6Iiwib2JqIjpbW3sicGF0aCI6IlwvZlwvN2UwY2YwMzMtOWM4Ni00MGJkLTkwNDAtMzkxZjRkZjYyM2JlXC9kN3ZzeDRtLWQ1OTJmMDY5LThjNjctNGY5Ni1hNjMxLTI5OWZjZTc0MzNjMi5qcGcifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6ZmlsZS5kb3dubG9hZCJdfQ.rlZtL91F_xk2izTTkpMXbjTy8Gk39K4LwTO2HyU5ER0)">
-    <div class="vertical">
-        <div class="main-header-content inner">
-            <h1 class="page-title">FOR THE EMPEROR</h1>
-            <div class="entry-title-divider">
-                <span></span><span></span><span></span>
-            </div>
-            <h2 class="page-description">BLOOD FOR THE GOD EMPEROR</h2>
-        </div>
-    </div>
-    <a class="scroll-down icon-arrow-left" href="#content" data-offset="-45"><span class="hidden">Scroll Down</span></a>
-</header>
-<main id="content" class="content" role="main">
-    <div class="wraps">
-        <H3>SKULL FOR THE GOLDEN THRONE </H3>
-        <?php if (isLoggedIn()) : ?>
-            <a class="btn green btn-create" href="<?php echo URLROOT ?>/posts/create">
-                Create
-            </a>
-        <?php endif; ?>
-        <div class="row grid">
-            <!-- Loop through the data and render post -->
-            <?php foreach ($data['posts'] as $post) : ?>
-                <div class="col-sm grid-item item-mod ">
-
-                    <!-- Check if this user is delete own post if not it will not show -->
-                    <?php if ((isset($_SESSION['user_id']) && $_SESSION['user_id'] == $post->user_id) || isAdmin()) : ?>
-                        <div class="wrap">
-                            <?php if (!isAdmin()) : ?>
-                                <a class="btn orange btn-update" href="<?php echo URLROOT . "/posts/update/" . $post->id ?>">
-                                    Update
-                                </a>
-                            <?php endif; ?>
-                            <!-- !Check if this user is delete own post if not it will not show -->
-                            <!-- Delete button -->
-                            <form action="<?php echo URLROOT . "/posts/delete/" . $post->id ?>" method="post">
-                                <input type="submit" name="delete" value="delete" class="btn red btn-delete">
-                            </form>
-                            <!-- !Delete button -->
-                        </div>
-
-                    <?php endif; ?>
-                    <article class="post">
-                        <!-- image -->
-                        <?php if ($post->image) : ?>
-                            <a class="link-post" href="<?php echo URLROOT . "/posts/post/" . $post->id ?>"><img class="img-posts" style="width:255;height:190px" src="<?php echo URLROOT . '/public/img/' . $post->image; ?>"></a>
-                        <?php endif; ?>
-                        <!-- !image -->
-                        <div class="wrapgriditem">
-                            <header class="post-header">
-                                <!-- title -->
-                                <h2 class="post-title"><a href="<?php echo URLROOT . "/posts/post/" . $post->id ?>">
-                                        <?php echo $post->title; ?>
-                                    </a></h2>
-                                <!-- !title -->
-                                <!-- view -->
-                                <span>Views:<?php echo $post->views; ?></span>
-                                <!-- view -->
-                            </header>
-                            <!-- body -->
-                            <section class="post-excerpt">
-                                <p><?php echo $post->summary ?></p>
-                                <a class="read-more" href="<?php echo URLROOT . "/posts/post/" . $post->id ?>">See more &raquo;</a>
-                            </section>
-                            <!-- !body -->
-                            <footer class="post-meta">
-                                <img class="author-thumb" src="<?php echo URLROOT ?>/public/img/gravatar.jpg" alt="David" nopin="nopin" />
-                                <?php foreach ($data['users'] as $user) : ?>
-                                    <?php if ($user->id == $post->user_id) : ?>
-
-                                        <a href="<?php echo URLROOT . '/users/author/' . $user->id  ?>"><?php echo $user->username; ?></a>
-
-                                    <?php endif; ?>
-                                <?php endforeach;  ?>
-                                <time class="post-date" datetime="2016-12-18">
-                                    <?php echo 'Created on : ' . $post->created_at ?>
-                                </time>
-                                <?php if (isset($post->updated_at)) : ?>
-                                    <time class="post-date" datetime="2016-12-18">
-                                        <?php echo 'Updated on : ' . $post->updated_at ?> </time>
-                                <?php endif; ?>
-
-                            </footer>
-                        </div>
-                    </article>
+<!-- container -->
+<div class="container">
+    <header>
+        <a href="<?php echo URLROOT; ?>/index"><img href="<?php echo URLROOT; ?>/"><img src="<?php echo URLROOT ?>/public/img/logo.png"></a>
+    </header>
+    <section class="main-slider">
+        <ul class="bxslider">
+            <li>
+                <div class="slider-item"><img src="<?php echo URLROOT; ?>/img/1140x500-2.jpg" title="Funky roots" />
+                    <h2><a href="<?php echo URLROOT ?>/index" title="Vintage-Inspired Finds for Your Home">Vintage-Inspired Finds for Your Home</a></h2>
                 </div>
+            </li>
+            <li>
+                <div class="slider-item"><img src="<?php echo URLROOT; ?>/img/1140x500-1.jpg" title="Funky roots" />
+                    <h2><a href="<?php echo URLROOT ?>/index" title="Vintage-Inspired Finds for Your Home">Vintage-Inspired Finds for Your Home</a></h2>
+                </div>
+            </li>
+            <li>
+                <div class="slider-item"><img src="<?php echo URLROOT; ?>/img/1140x500-3.jpg" title="Funky roots" />
+                    <h2><a href="<?php echo URLROOT ?>/index" title="Vintage-Inspired Finds for Your Home">Vintage-Inspired Finds for Your Home</a></h2>
+                </div>
+            </li>
+        </ul>
+    </section>
+    <section>
+        <div class="row">
+            <div class="col-md-8">
+                <?php foreach ($data['posts'] as $post) : ?>
 
-            <?php endforeach; ?>
-            <!-- !Loop through the data and render post -->
+                    <!-- Article -->
+                    <article class="blog-post">
+                        <!-- Image -->
+                        <div class="blog-post-image">
+                            <?php if ($post->image) : ?>
+                                <a href="<?php echo URLROOT . "/posts/post/" . $post->id ?>"><img src="<?php echo URLROOT . '/public/img/' . $post->image; ?>" alt=""></a>
+                            <?php endif; ?>
+                        </div>
+                        <!-- !Image -->
+                        <div class="blog-post-body">
+                            <!-- Title -->
+                            <h2><a href="post.html"> <?php echo $post->title; ?>
+                                </a></h2>
+                            <!-- !Title -->
+
+                            <div class="post-meta"><span>by <?php foreach ($data['users'] as $user) : ?>
+                                        <?php if ($user->id == $post->user_id) : ?>
+
+                                            <a href="<?php echo URLROOT . '/users/author/' . $user->id  ?>"><?php echo $user->username; ?></a>
+
+                                        <?php endif; ?>
+                                    <?php endforeach;  ?></span>/<span>
+                                    <!-- view -->
+                                    <span><i class="far fa-eye"></i>Views:<?php echo $post->views; ?></span>
+                                    <!-- !view -->
+                                    <!-- Time -->
+                                    <i class="fa fa-clock-o"></i>
+                                    <time class="post-date" datetime="2016-12-18">
+                                        <?php echo 'Created on : ' . $post->created_at ?>
+                                    </time>
+                                    <!-- !Time -->
+                                    <!-- Comment -->
+                                </span>/<span>
+                                    <i class="fa fa-comment-o"></i> <a href="#">343</a></span>
+                                <!-- !Comment -->
+                            </div>
+                            <!-- Summary -->
+                            <p><?php echo $post->summary ?></p>
+                            <!-- !Summary -->
+                            <div class="read-more">
+                                <a class="read-more" href="<?php echo URLROOT . "/posts/post/" . $post->id ?>">See more &raquo;</a>
+                            </div>
+                        </div>
+
+                    </article>
+                <?php endforeach; ?>
+
+                <span class="page-number">Page 1 of <?php echo  $data['pages'] ?>
+                </span>
+                <?php echo "total pages:" . $data['total_pages'] ?>
+
+                <nav class="pagination" role="navigation">
+
+                    <a class="newer-posts" href="<?php
+                                                    $pageprev = $data['pages'];
+                                                    if ($data['pages'] <= 1) {
+                                                        echo URLROOT . '/posts';
+                                                    } else {
+                                                        echo URLROOT . '/posts?pages=' . ($pageprev - 1);
+                                                    }
+                                                    ?>"> &larr; Newer Posts </a>
+
+                    <a class="older-posts" href="<?php
+                                                    $pagenext = $data['pages'];
+                                                    if ($data['pages'] >= $data['total_pages']) {
+                                                        echo URLROOT . '/posts';
+                                                    } else {
+                                                        echo URLROOT . '/posts?pages=' . ($pagenext + 1);
+                                                    }
+                                                    ?>"> Older Posts &rarr; </a>
+                </nav>
+            </div>
+            <div class="col-md-4 sidebar-gutter">
+                <aside>
+                    <!-- sidebar-widget -->
+                    <form style="margin-bottom: 50px;" action="<?php echo URLROOT ?>/posts/search" method="post">
+
+                        <input class="form-control" name="title" type="text" placeholder="Search for post..." aria-label="Search">
+
+                    </form>
+                    <div class="sidebar-widget">
+                        <h3 class="sidebar-title">About Me</h3>
+                        <div class="widget-container widget-about">
+                            <a href="post.html"><img src="images/author.jpg" alt=""></a>
+                            <h4>Nguyen Van Long</h4>
+                            <div class="author-title">Back-end developer</div>
+                            <p> Back-end developer from Dong Ngac,Ha noi
+                                And also a addiction to warhammer 40k</p>
+                        </div>
+                    </div>
+                    <!-- sidebar-widget -->
+                    <div class="sidebar-widget">
+                        <h3 class="sidebar-title">Featured Posts</h3>
+                        <div class="widget-container">
+                            <!-- Featured Posts -->
+                            <?php foreach ($data['posts'] as $post) : ?>
+                                <article class="widget-post">
+                                    <div class="post-image">
+                                        <a href="<?php echo URLROOT . "/posts/post/" . $post->id ?>"><img style="width:90px;height:60px" src="<?php echo URLROOT . '/public/img/' . $post->image; ?>" alt=""></a>
+                                    </div>
+                                    <div class="post-body">
+                                        <h2><a href="<?php echo URLROOT . "/posts/post/" . $post->id ?>">
+                                                <!-- title -->
+                                                <p><?php echo $post->title ?></p>
+                                                <!-- !title -->
+                                            </a></h2>
+                                        <div class="post-meta">
+                                            <span>
+                                                <!-- Time -->
+                                                <i class="fa fa-clock-o"></i>
+                                                <time class="post-date" datetime="2016-12-18">
+                                                    <?php echo 'Created on : ' . $post->created_at ?>
+                                                </time>
+                                                <!-- !Time -->
+                                            </span>
+                                            <!-- comments -->
+                                            <span><i class="fa fa-comment-o"></i> 23</a></span>
+                                            <!-- !comments -->
+
+                                        </div>
+                                    </div>
+                                </article>
+                            <?php endforeach; ?>
+                            <!-- !Featured Posts -->
+                        </div>
+                    </div>
+                    <!-- sidebar-widget -->
+                    <div class="sidebar-widget">
+                        <h3 class="sidebar-title">Socials</h3>
+                        <div class="widget-container">
+                            <div class="widget-socials">
+                                <a href="#"><i class="fa fa-facebook"></i></a>
+                                <a href="#"><i class="fa fa-twitter"></i></a>
+                                <a href="#"><i class="fa fa-instagram"></i></a>
+                                <a href="#"><i class="fa fa-google-plus"></i></a>
+                                <a href="#"><i class="fa fa-dribbble"></i></a>
+                                <a href="#"><i class="fa fa-reddit"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- sidebar-widget -->
+                    <div class="sidebar-widget">
+                        <h3 class="sidebar-title">Topics</h3>
+                        <div class="widget-container">
+                            <ul>
+                                <?php foreach ($data['topics'] as $topic) : ?>
+                                    <li><a href="<?php echo URLROOT . '/topics/topic/' . $topic->id ?>"><?php echo $topic->name ?></a></li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
+                    </div>
+            </div>
+            </aside>
         </div>
-        <span class="page-number"  >Page 1 of <?php echo  $data['pages'] ?>
-        </span>
-        <?php echo "total pages:" . $data['total_pages'] ?>
+</div>
+</section>
+</div>
+<!-- /.container -->
 
-        <nav class="pagination" role="navigation">
 
-                <a class="newer-posts" href="<?php
-                                                $pageprev = $data['pages'];
-                                                if ($data['pages'] <= 1) {
-                                                    echo URLROOT . '/posts';
-                                                } else {
-                                                    echo URLROOT . '/posts?pages=' . ($pageprev - 1);
-                                                }
-                                                ?>"> &larr; Newer Posts </a>
-                                                
-                <a class="older-posts" href="<?php
-                                                $pagenext = $data['pages'];
-                                                if ($data['pages'] >= $data['total_pages']) {
-                                                    echo URLROOT . '/posts';
-                                                } else {
-                                                    echo URLROOT . '/posts?pages=' . ($pagenext + 1);
-                                                }
-                                                ?>"> Older Posts &rarr; </a>
-        </nav>
-    </div>
-</main>
+
 
 <?php
 require APPROOT . '/views/includes/footer.php';

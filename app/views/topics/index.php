@@ -5,18 +5,6 @@ require APPROOT . '/views/includes/head.php';
 <?php
 require APPROOT . '/views/includes/navigation.php';
 ?>
-<header class="main-header " style="background-image: url(https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/7e0cf033-9c86-40bd-9040-391f4df623be/d7vsx4m-d592f069-8c67-4f96-a631-299fce7433c2.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOiIsImlzcyI6InVybjphcHA6Iiwib2JqIjpbW3sicGF0aCI6IlwvZlwvN2UwY2YwMzMtOWM4Ni00MGJkLTkwNDAtMzkxZjRkZjYyM2JlXC9kN3ZzeDRtLWQ1OTJmMDY5LThjNjctNGY5Ni1hNjMxLTI5OWZjZTc0MzNjMi5qcGcifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6ZmlsZS5kb3dubG9hZCJdfQ.rlZtL91F_xk2izTTkpMXbjTy8Gk39K4LwTO2HyU5ER0)">
-    <div class="vertical">
-        <div class="main-header-content inner">
-            <h1 class="page-title">FOR THE EMPEROR</h1>
-            <div class="entry-title-divider">
-                <span></span><span></span><span></span>
-            </div>
-            <h2 class="page-description">BLOOD FOR THE GOD EMPEROR</h2>
-        </div>
-    </div>
-    <a class="scroll-down icon-arrow-left" href="#content" data-offset="-45"><span class="hidden">Scroll Down</span></a>
-</header>
 <main id="content" class="content" role="main">
     <div class="wraps">
         <H3>Topics </H3>

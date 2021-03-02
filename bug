@@ -1,0 +1,4 @@
+Bug name : User can not create or modify data 
+Issue : In session_helpers.php
+Bug name : Need to validate delete 
+Issue : Anyone can delete anyone post 

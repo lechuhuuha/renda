@@ -99,7 +99,7 @@ class Topics extends Controller
     }
     public function update($topic_id)
     {
-        if (!isLoggedIn() && isAdmin()) {
+        if (!isLoggedIn() && !isAdmin()) {
             header('Location:' . URLROOT . '/topics');
         }
         $topic = $this->topicModel->findTopicById($topic_id);
